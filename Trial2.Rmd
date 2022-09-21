@@ -1,0 +1,35 @@
+---
+title: "Future climate exposure for TUSK"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(officer);library(dplyr)
+
+
+read_docx()%>%
+  body_add_par("TUSK")%>%
+  print("Climate exposure report for TUSK.docx")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+

@@ -7,13 +7,14 @@ output:
 params:
   region:
     label: "Region:"
-    value: SW
+    value: NCPN
     input: select
-    choices: []
+    choices: [APHN, CHDN, CUPN, ERMN, GLKN, GRYN, GULN, HTLN, KLMN, CRLA, MEDN, MIDN, MOJN, NCBN, NCCN, NCPN, NCRN, NETN, NGPN, ROMN, SCPN, SECN, SFAN, SFCN, SIEN, SODN, SOPN, UCBN]
   name: 
     label: "Park Name"
     value: TUSK
-    choices: [TUSK, ACAD]
+    input: select
+    choices: !unit_code$UNIT_CODE
 toc: 
 theme: united
 ---
@@ -27,6 +28,8 @@ rm(list = ls())
 
 library(stars);library(dplyr);library(ggplot2);library(ggthemes);library(viridis);library(here);library(ggrepel);library(rlang);library(units);library(knitr);library(purrr);library(glue); library(gt); library(officer);library(dplyr)
 
+
+# Run this before knitting document
 unit_code<-read.csv("Data/Unit_Codes.csv")
 ```
 
