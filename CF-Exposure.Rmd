@@ -1,9 +1,8 @@
 ---
 title: "Future Climate Exposure Report"
 date: "`r Sys.Date()`"
-output:
-  word_document: 
-    reference_docx: "Data/template.docx"
+output: officedown::rdocx_document
+  reference_docx: "Data/template.docx"
 params:
   region:
     label: "Region:"
@@ -14,7 +13,7 @@ params:
     label: "Park Name"
     value: TUSK
     input: select
-    choices: !unit_code$UNIT_CODE
+    choices: [ABLI, ACAD, ADAM, AFBG, AGFO, ALFL, ALPO, AMIS, ANDE, ANJO, ANTI, APCO, APIS, APPA, ARCH, ARHO, ARPO, ASIS, AZRU, BADL, BAND, BEOL, BEPA, BIBE, BICA, BICR, BICY, BIHO, BISC, BISO, BITH, BLCA, BLRI, BLRV, BLUE, BOAF, BOHA, BOST, BOWA, BRCA, BRCR, BRVB, BUFF, CACH, CACL, CACO, CAGR, CAHA, CAJO, CALO, CAMO, CANA, CANE, CANY, CARE, CARI, CARL, CASA, CATO, CAVE, CAVO, CAWO, CEBE, CEBR, CECH, CHAM, CHAT, CHCH, CHCU, CHIC, CHIR, CHIS, CHOH, CHPI, CHSC, CHYO, CIRO, CLBA, COGA, COLM, COLO, CONG, CORO, COWP, CRLA, CRMO, CRMP, CUGA, CUIS, CURE, CUVA, DAAV, DDEM, DELA, DEPO,DETO,DEVA, DEWA, DINO, EBLA, EDAL, EDIS, EFMO, EISE, ELMA, ELMO, ELRO, EUON, EVER, FEHA, FIIS, FILA, FLFO, FLNI, FOBO, FOBU, FOCA, FODA, FODO, FOFR, FOLA, FOLS, FOMA, FOMC, FOMR, FONE, FOPU, FOSC, FOSM, FOST, FOTH, FOUN, FOUS, FOVA, FOWA, FRDE, FRDO, FRHI, FRLA, FRRI, FRSP, FRST, GARI, GATE, GEGR, GERO, GETT, GEWA, GICL, GLAC, GLCA, GOGA, GOSP, GRBA, GRCA, GREE, GRKO, GRPO, GRSA, GRSA, GRSM, GRTE, GUCO, GUIS, GUMO, GWCA, GWMP, HAFE, HAFO, HAGR, HAMP, HART, HATU, HEHO, HOBE, HOCU, HOFR, HOFU, HOME, HOSP, HOVE, HSTR, HUTR, IATR, INDE, INDU, ISRO, JAGA, JAZZ, JECA, JEFF, JEFM, JELA, JICA, JODA, JODR, JOFI, JOFL, JOMU, JOTR, KAWW, KEMO, KEWE, KICA, KIMO, KLGO, KNRI, KOWA, LABE, LACH, LAKE, LAMR, LARO, LAVO, LECL, LEWI, LIBI, LIBO, LIHO, LINC, LIRI, LONG, LOSA, LOWE, LYBA, LYJO, MABE, MABI, MACA, MALL, MALU, MANA, MANZ, MAPR, MAVA, MAWA, MEMY, MEVE, MIIN, MIMA, MIMI, MISP, MISS, MLKM, MNRR, MOCA, MOCR, MOJA, MONO, MORA, MORR, MORU, MUWO, NABR, NACA, NATC, NATR, NAVA, NEBE, NEPE, NERI, NICO, NIOB, NISI, NOCA, NOCO, OBRI, OCMU, OLYM, ORCA, ORPI, OZAR, PAAL, PAAV, PAGR, PAIS, PECO, PEFO, PERI, PETE, PETR, PIMA, PINN, PIPE, PIRO, PISC, PISP, POPO, PORE, PRWI, PULL, RABR, REDW, REER, RICH, RIGR, RIRA, ROCR, ROLA, ROMO, RORI, ROWI, RRBH, RUCA, SAAN, SACN, SAGA, SAGU, SAHI, SAIR, SAJH, SAMA, SAMO, SAND, SAPA, SAPU, SARA, SCBL, SEMO, SEQU, SHEN, SHIL, SLBE, SPAR, STEA, STGE, STLI, STON, STRI, SUCR, TAPR, THIS, THKO, THRB, THRI, THRO, THST, TICA, TIMU, TONT, TUAI, TUIN, TULE, TUMA, TUPE, TUSK, TUZI, ULSG, UPDE, VAFO, VALL, VAMA, VICK, VIVE, VOYA, WABA, WACA, WACO, WAMO, WEFA, WHHO, WHIS, WHMI, WHSA, WICA, WICL, WICR, WIHO, WORI, WOTR, WRBR, WUPA, WWII, WWIM, YELL, YOSE, YUHO, ZION]
 toc: 
 theme: united
 ---
@@ -28,15 +27,11 @@ rm(list = ls())
 
 library(stars);library(dplyr);library(ggplot2);library(ggthemes);library(viridis);library(here);library(ggrepel);library(rlang);library(units);library(knitr);library(purrr);library(glue); library(gt); library(officer);library(dplyr)
 
-
-# Run this before knitting document
-unit_code<-read.csv("Data/Unit_Codes.csv")
 ```
 
 ```{r Iterate, echo=FALSE, message=FALSE, warning=FALSE}
-varNames<-c("TUSK","ACAD")
 
-#purrr::walk(varNames, ~rmarkdown::render('CF-Exposure.Rmd', params = list(data = .) output_file = glue::glue("CF_{.}.doc")))
+purrr::walk(varNames, ~rmarkdown::render('CF-Exposure.Rmd', params = list(data = .) output_file = glue::glue("CF_{.}.doc")))
 
 # for (i in 1:length(varNames)) {
 #     body_replace_all_text(old_value = "(NAME)",
@@ -63,7 +58,15 @@ varNames<-c("TUSK","ACAD")
 
 Rising temperatures, altered precipitation patterns, stronger storms, and other climatic changes are already evident across America's national parks. The effects include more severe wildland fires and floods, declining snowpack, melting glaciers, rising sea levels, and increased erosion (Monahan and Fisichelli 2014, Gonzalez 2018). The National Park Service (NPS) recognizes the importance of addressing the effects of current and future climate change in planning and operations through climate change adaptation. To meet this challenge, the NPS has developed guidance and resources for including climate change in planning process [(https://www.nps.gov/subjects/climatechange/planning.htm)](https://www.nps.gov/subjects/climatechange/planning.htm).
 
+<!---BLOCK_MULTICOL_START--->
+
 The NPS [*Planning for a Changing Climate*](https://irma.nps.gov/DataStore/Reference/Profile/2279647) guidance emphasizes that climate-informed plans need to 1) develop forward-looking goals that consider future climatic conditions by using climate projections, and 2) consider more than one scenario of the future when developing management strategies and actions. This future climate exposure report provides information designed to help planners and managers consider future climate conditions, including more than one scenario of the future, and develop forward-looking goals.
+
+`r run_columnbreak()`
+
+$\color{blue}{\text{Climate change adaption}}$ *is an adjustment in natural or human systems that moderates harm or harnesses beneficial opportunities. Timely, forward-looking adaptation can help conserve cultural and natural resources, develop climate change-ready infrastructure, safeguard human wellbeing, and foster a positive visitor experience. See [Climate Change Glossary](https://irmadev.nps.gov/DataStore/DownloadFile/665664) for full definition.*
+
+<!---BLOCK_MULTICOL_STOP--->
 
 (FULL NAME) (`r params$name`) submitted a technical assistance request to the Climate Change Response Program requesting climate change impacts information to include in development of the park General Management Plan. The climate information highlighted in this report includes both historical climate trends as well as projections of future climate to help the park consider climate change related vulnerabilities in planning efforts.
 
