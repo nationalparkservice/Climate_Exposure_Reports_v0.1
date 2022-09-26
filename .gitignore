@@ -39,5 +39,5 @@ vignettes/*.pdf
 .Renviron
 
 # Data folders
-/Data/ACAD
-/Data/TUSK
+/Data
+/Data
