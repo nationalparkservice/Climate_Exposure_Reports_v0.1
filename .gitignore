@@ -40,4 +40,6 @@ vignettes/*.pdf
 
 # Data folders
 /Data
-/Data
+
+# Word docs
+*.docx
