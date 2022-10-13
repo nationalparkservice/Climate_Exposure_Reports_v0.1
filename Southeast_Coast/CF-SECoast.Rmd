@@ -1,0 +1,243 @@
+---
+title: "Future Climate Exposure Report"
+date: "`r Sys.Date()`"
+output: 
+  word_document:
+    reference_docx: "Data/template.docx"
+params:
+  name: 
+    label: "Park Name"
+    value: TUSK
+    input: select
+    choices: [ABLI, ACAD, ADAM, AFBG, AGFO, ALFL, ALPO, AMIS, ANDE, ANJO, ANTI, APCO, APIS, APPA, ARCH, ARHO, ARPO, ASIS, AZRU, BADL, BAND, BEOL, BEPA, BIBE, BICA, BICR, BICY, BIHO, BISC, BISO, BITH, BLCA, BLRI, BLRV, BLUE, BOAF, BOHA, BOST, BOWA, BRCA, BRCR, BRVB, BUFF, CACH, CACL, CACO, CAGR, CAHA, CAJO, CALO, CAMO, CANA, CANE, CANY, CARE, CARI, CARL, CASA, CATO, CAVE, CAVO, CAWO, CEBE, CEBR, CECH, CHAM, CHAT, CHCH, CHCU, CHIC, CHIR, CHIS, CHOH, CHPI, CHSC, CHYO, CIRO, CLBA, COGA, COLM, COLO, CONG, CORO, COWP, CRLA, CRMO, CRMP, CUGA, CUIS, CURE, CUVA, DAAV, DDEM, DELA, DEPO,DETO,DEVA, DEWA, DINO, EBLA, EDAL, EDIS, EFMO, EISE, ELMA, ELMO, ELRO, EUON, EVER, FEHA, FIIS, FILA, FLFO, FLNI, FOBO, FOBU, FOCA, FODA, FODO, FOFR, FOLA, FOLS, FOMA, FOMC, FOMR, FONE, FOPU, FOSC, FOSM, FOST, FOTH, FOUN, FOUS, FOVA, FOWA, FRDE, FRDO, FRHI, FRLA, FRRI, FRSP, FRST, GARI, GATE, GEGR, GERO, GETT, GEWA, GICL, GLAC, GLCA, GOGA, GOSP, GRBA, GRCA, GREE, GRKO, GRPO, GRSA, GRSA, GRSM, GRTE, GUCO, GUIS, GUMO, GWCA, GWMP, HAFE, HAFO, HAGR, HAMP, HART, HATU, HEHO, HOBE, HOCU, HOFR, HOFU, HOME, HOSP, HOVE, HSTR, HUTR, IATR, INDE, INDU, ISRO, JAGA, JAZZ, JECA, JEFF, JEFM, JELA, JICA, JODA, JODR, JOFI, JOFL, JOMU, JOTR, KAWW, KEMO, KEWE, KICA, KIMO, KLGO, KNRI, KOWA, LABE, LACH, LAKE, LAMR, LARO, LAVO, LECL, LEWI, LIBI, LIBO, LIHO, LINC, LIRI, LONG, LOSA, LOWE, LYBA, LYJO, MABE, MABI, MACA, MALL, MALU, MANA, MANZ, MAPR, MAVA, MAWA, MEMY, MEVE, MIIN, MIMA, MIMI, MISP, MISS, MLKM, MNRR, MOCA, MOCR, MOJA, MONO, MORA, MORR, MORU, MUWO, NABR, NACA, NATC, NATR, NAVA, NEBE, NEPE, NERI, NICO, NIOB, NISI, NOCA, NOCO, OBRI, OCMU, OLYM, ORCA, ORPI, OZAR, PAAL, PAAV, PAGR, PAIS, PECO, PEFO, PERI, PETE, PETR, PIMA, PINN, PIPE, PIRO, PISC, PISP, POPO, PORE, PRWI, PULL, RABR, REDW, REER, RICH, RIGR, RIRA, ROCR, ROLA, ROMO, RORI, ROWI, RRBH, RUCA, SAAN, SACN, SAGA, SAGU, SAHI, SAIR, SAJH, SAMA, SAMO, SAND, SAPA, SAPU, SARA, SCBL, SEMO, SEQU, SHEN, SHIL, SLBE, SPAR, STEA, STGE, STLI, STON, STRI, SUCR, TAPR, THIS, THKO, THRB, THRI, THRO, THST, TICA, TIMU, TONT, TUAI, TUIN, TULE, TUMA, TUPE, TUSK, TUZI, ULSG, UPDE, VAFO, VALL, VAMA, VICK, VIVE, VOYA, WABA, WACA, WACO, WAMO, WEFA, WHHO, WHIS, WHMI, WHSA, WICA, WICL, WICR, WIHO, WORI, WOTR, WRBR, WUPA, WWII, WWIM, YELL, YOSE, YUHO, ZION]
+   region:
+    label: "Region:"
+    value: NCPN
+    input: select
+    choices: [APHN, CHDN, CUPN, ERMN, GLKN, GRYN, GULN, HTLN, KLMN, CRLA, MEDN, MIDN, MOJN, NCBN, NCCN, NCPN, NCRN, NETN, NGPN, ROMN, SCPN, SECN, SFAN, SFCN, SIEN, SODN, SOPN, UCBN]
+toc: 
+theme: united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Initials, echo=FALSE, message=FALSE, warning=FALSE}
+rm(list = ls())
+
+library(stars);library(dplyr);library(ggplot2);library(ggthemes);library(viridis);library(here);library(ggrepel);library(rlang);library(units);library(knitr);library(purrr);library(glue); library(gt); library(officer);library(dplyr); library(abind); library(sf)
+
+```
+
+```{r Iterate, echo=FALSE, message=FALSE, warning=FALSE}
+
+purrr::walk(varNames, ~rmarkdown::render('CF-Exposure.Rmd', params = list(data = .) output_file = glue::glue("CF_{.}.doc")))
+
+# for (i in 1:length(varNames)) {
+#     body_replace_all_text(old_value = "(NAME)",
+#                           new_value = varNames[i], 
+#                           only_at_cursor=FALSE,
+#                           ignore.case =FALSE) %>%
+#     
+#     # then, print the outputs. Output name should be generated dynamically:
+#     # every report (for every i) need to have a different name.
+#     print(target = paste0("CF_",i,".docx")) 
+# 
+# }
+# 
+# for (i in 1:length(varNames)){
+#   body_replace_all_text(old_value = "(NAME)",
+#                           new_value = varNames[i], 
+#                           only_at_cursor=FALSE,
+#                           ignore.case =FALSE) %>%
+#   ~rmarkdown::render("CF-Exposure.Rmd", output_file = glue::glue("CF_",i,".docx"))
+#   }
+```
+
+# Introduction
+
+Rising temperatures, altered precipitation patterns, stronger storms, and other climatic changes are already evident across America's national parks. The effects include more severe wildland fires and floods, declining snowpack, melting glaciers, rising sea levels, and increased erosion (Monahan and Fisichelli 2014, Gonzalez 2018). The National Park Service (NPS) recognizes the importance of addressing the effects of current and future climate change in planning and operations through climate change adaptation. To meet this challenge, the NPS has developed guidance and resources for including climate change in planning process [(https://www.nps.gov/subjects/climatechange/planning.htm)](https://www.nps.gov/subjects/climatechange/planning.htm).
+
+<!---BLOCK_MULTICOL_START--->
+
+The NPS [*Planning for a Changing Climate*](https://irma.nps.gov/DataStore/Reference/Profile/2279647) guidance emphasizes that climate-informed plans need to 1) develop forward-looking goals that consider future climatic conditions by using climate projections, and 2) consider more than one scenario of the future when developing management strategies and actions. This future climate exposure report provides information designed to help planners and managers consider future climate conditions, including more than one scenario of the future, and develop forward-looking goals.
+
+`r run_columnbreak()`
+
+$\color{blue}{\text{Climate change adaption}}$ *is an adjustment in natural or human systems that moderates harm or harnesses beneficial opportunities. Timely, forward-looking adaptation can help conserve cultural and natural resources, develop climate change-ready infrastructure, safeguard human wellbeing, and foster a positive visitor experience. See [Climate Change Glossary](https://irmadev.nps.gov/DataStore/DownloadFile/665664) for full definition.*
+
+<!---BLOCK_MULTICOL_STOP--->
+
+(FULL NAME) (`r params$name`) submitted a technical assistance request to the Climate Change Response Program requesting climate change impacts information to include in development of the park General Management Plan. The climate information highlighted in this report includes both historical climate trends as well as projections of future climate to help the park consider climate change related vulnerabilities in planning efforts.
+
+# Projections of future climate exposure
+
+Climate projections for `r params$name` in 2040 (2025-2055) span a range of warming in average annual temperature from +1.8 °F to +5.3 °F, and a range of annual precipitation change from -0.3 inches (-6%) to +1.5 inches (+29%) compared to historical (1979-2012) annual averages (See [climate exposure methods note](INSERT_LINK) for methodological details). Seasonal shifts in precipitation patterns (type, frequency, and intensity) and growing season conditions (onset, duration, and soil moisture levels) varied among climate models. Given this range of future projections, planning for a single future is highly unlikely to prepare a manager for what will transpire, which is why identifying and developing multiple climate futures is important to best characterize the broad range of uncertainty (Lawrence et al. 2021). To help `r params$name` planners and managers consider a wide range of plausible future climate conditions, we selected two climate futures -- -- a "Warm Wet" and a "Hot Dry" scenario -- that capture the breadth of projections across the various climate models and emissions scenarios (See [climate exposure methods note](INSERT_LINK) for methodological details).
+
+Understanding potential impacts on resources of interests requires evaluating both exposure and sensitivity of those resources (Figure 2). The NPVuln report (Michalak et al. 2021; [NPVuln - Climate Change (U.S. National Park Service) (nps.gov)](https://www.nps.gov/subjects/climatechange/npvuln.htm)) used 47 indicators to evaluate parks' historical exposure and sensitivity to climate changes and found that 71% of national parks in the contiguous U.S. are at high risk from the effects of climate change. `r params$name` in particular was flagged as vulnerable to: future high-impact fire, high-impact drought, pests and invasive species, biome shifts, and extreme temperature and precipitation changes. Specific climate metrics relevant to these impacts are summarized below for the warm wet and hot dry climate futures.
+
+![**Figure 1.** Climate vulnerability results from exposure to climate changes, sensitivity to those changes, and the ability of the resource to adapt to those changes (Michalak et al. 2021).](Data/Exposure_Sensitivity.png){width="431"}
+
+## Annual Average temperature and precipitation
+
+Average annual temperature is increasing relative to the 1979-2012 historical period in both climate futures, but the magnitude of that change differs with moderate warming (+3.1°F [±0.7]) in the warm wet climate future and considerable warming (+5.0 °F [±1.0]) in the hot dry climate future (See Appendix 1 for table of changes for climate metrics). While these averages may seem modest, the hottest 2 years in 1895-2020 (1935 and 1980) are average years in the warm wet climate future and all years in the hot dry climate future exceed anything that has been experienced at `r params$name` since 1895.
+
+There is more uncertainty in the direction of change for precipitation, with the warm wet climate future projecting +0.7 inches/year (±1.1) and no change in annual precipitation for the hot dry climate future (0 inches/year, ±0.8) relative to 1979-2012. Average precipitation may change slightly in either direction but the variability that `r params$name` has always experienced will continue into the future.
+
+![**Figure 2.** Historical observed data (gray lines; 1979-2020) and climate futures (blueand red lines; 2023-2099(Abatzoglou & Brown 2012)) for annual mean temperature and precipitation in `r params$name`. Respectively, the blue and red lines represent the warm wet and hot dry climate futures (inmcm4.rcp45,, MIROC-ESM-CHEM.rcp85). The smooth, dark line running through each projection is the 10-year running average. Gray shaded area represents the time period (2025-2055) over which projections were averaged to summarized changes from the baseline (Appendix 1).](Data/TUSK/WarmWet_HotDry/figures/TavgF-PrcpIn-Timeseries.png){width="431"}
+
+While average temperature and precipitation changes can be illustrative for demonstrating direction and relative magnitude of change for each climate future, it can be difficult to interpret resource impacts from these metrics alone (Lawrence et al. 2021; Miller et al. 2022). Averages don't adequately capture variability and resulting changes in extremes or compound events that often are most consequential for resources. Therefore, the climate future metrics presented below are specific to the sensitivities of `r params$name` resources.
+
+## Extreme temperature
+
+Extreme temperatures can increase weathering of structures, threaten park staff and visitor safety, and increase stresses for HVAC systems. If not addressed through building design or more efficient temperature control systems, the increased demand for complex air conditioning systems can add stress to building envelopes and can require significant alterations to a structure. The Occupational Safety and Health Administration (OSHA) has established guidelines (OSHA 2019) associated with heat index classifications and protective measures that should be taken for ranges of heat index values. In 2004, the National Park Service Risk Management Office issued guidance for heat stress suggesting that general heat stress controls should be practiced (NPS 2004) when heat index \>105 °F, "dangerous" heat index days. Extreme temperatures are expected to increase at `r params$name` under both climate futures (Figure 4) with 243% increase in days exceeding the dangerous heat index threshold for the more modest warming scenario and a 535% increase of those incidents under the hot dry scenario.
+
+![**Figure 3.** Metrics of extreme temperature at `r params$name`. Top plot represents the number of days per year when maximum temperature exceeds 95 ° F at `r params$name` historically and in both climate futures. The bottom plot is the number of days per year when heat index reaches 'dangerous' levels (103-124 °F).](Data/TUSK/WarmWet_HotDry/figures/OverHotTemp-HI.Dan-Panel.png){width="431"}
+
+## Extreme precipitation
+
+The climate within `r params$name` is considered (climate), with average annual precipitation of approximately 7 inches historically. Changing precipitation and humidity conditions can result in local flooding, encourage mold growth, wood decay, increase fire risk, and intensify drought conditions, depending on the pattern of change. Extreme precipitation events and the risk of flooding are expected to regionally intensify with a changing climate (Dethier et al. 2020, Tabari 2020). These events present a variety of threats to infrastructure and operations including flooding of sites, sewage backup, accelerated decay of masonry, overcoming drainage systems, road wash out, cracks in building infrastructure, destabilization of buildings and pipes, erosion of supporting ground around structures, among many other effects. Floods threaten infrastructure and operations through a variety of mechanisms, including inundation of structures, enhanced erosional forces, road wash out, structural collapse from force of floodwaters, sewage backup, and damage to utilities, generators, and electrical systems. Post-flooding effects include increased rot, fungal/insect attack, mold and mildew, and physical deterioration of wood, brick and stone building materials. Extreme precipitation events could increase the risks from flash floods and from geologic hazards. Slope failures caused by intense rainstorms will be a concern.
+
+Extreme precipitation is expected to increase at `r params$name` under both climate futures (Figure 5). Historically (1979-2012) 1.5 inches of rain in a 24-hour period was a 40-year flood event. In the warm wet climate future, 1.5 inches has a return interval of 11 years, whereas a 40-year flood event would increase to 2.2 inches. The hot dry climate future experiences an event of 1.5 inches in a day every 23 years and a 40-year event increases to 1.7 inches (Figure 5, top plot). While the magnitude of extreme events is increasing for both climate futures, the frequency of occurrence is declining (more precipitation by volume falls in less frequent events) for the hot dry climate future. Figure 5 (bottom plot) shows the days per year `r params$name` receives precipitation that is ≥0.5 inches in a day.
+
+![**Figure 4.**Top plot: Modeled recurrence intervals (annual) for 24-hour precipitation events for each climate future and the historical period. The x-axis indicates the return period expected for the amount of precipitation received in a day indicated on the y-axis (see Methodological note for details). Bottom plot: Number of days per year that receive ≥ 0.5 inch total, the historical 95th-percentile event.](Data/TUSK/WarmWet_HotDry/figures/Recurrenceinterval-OverPrecip95-Panel.png){width="431"}
+
+## Drought (drought characteristics)
+
+Rising air temperatures and changing precipitation patterns are exacerbating drought risk in many parts of the United States (Wehner et al. 2017). Changing drought conditions (frequency, severity, duration) can challenge a variety of infrastructure and operations (Department of Homeland Security 2015) in the NPS (e.g., water supply and wastewater systems), impair water quality (Mosley 2015), affect soil heaves and shrinkages (Fernandes et al. 2015), and may enhance other related risks such as wildfire.
+
+The Standardized Precipitation Evaporation Index (SPEI) provides a metric to assess changing drought conditions at `r params$name`. Figure 6 shows the annual SPEI values (SPEI-6, averaged for each year; see methodological note for details) for each climate future and drought characteristics (duration, return interval, and severity). In the hot dry climate future, conditions are almost always what would be considered a drought historically and the system will have little time to recover between these events. On the other hand, in the warm wet climate future, droughts will become shorter in duration, occur less frequently, and will be less severe.
+
+![**Figure 5.** . Drought metrics for `r params$name`. The top two plots show annual standardized precipitation and evapotranspiration index (SPEI) values for the observed historical period (1979-2020) and the two climate futures (2023-2099). The gray shaded area represents the 2025-2055 period upon which the characteristics are averaged (See climate exposure methods note <INSERT LINK> for methodological details). Bottom three plots show characteristics of average drought conditions for the historical period (1979-2012) and two climate futures (2025-2055).](Data/Tusk/WarmWet_HotDry/figures/DroughtCharacteristics-2-Panel.png){width="431"}
+
+## Wildfire
+
+Wildfire is a natural part of many forest, woodland, and grassland ecosystems. Excessive fire, however, can damage ecosystems, kill people, and damage infrastructure. Climate change is intensifying the heat that drives wildfire (Jolly et al. 2015) and altering the distribution and density of vegetation that comprises the fuel for wildfires (Gonzalez et al. 2010). These effects combine with the unnatural buildup of coarse woody debris and understory trees from decades of suppression of all fires, even natural ones (Agee and Skinner 2005). The effects of climate change on wildfire vary across landscapes. For areas where projected climate change increases fire risk, buildings, cultural landscapes, or other infrastructure located under or near tree canopies or dense grasslands are vulnerable to burning and destruction.
+
+Fire potential is expected to increase in the Southwest (Liu et al. 2013). Additionally, fire season could become a few months longer in the southern portion of the US. The increased future fire potential and longer fire seasons mean increased possibility for more intense wildfire activity (Liu et al. 2013). Barbero et al. (2015) has also identified an increasing trend in very large fires from 1984-2010 for the southern Rocky Mountain region. This trend of increasing numbers of very large fires is expected to continue as the fire risk projections show a continued increase in aridity, increases in spring and early summer wildfires, an increase in the Keetch-Byram Drought Index, and increasing wind speeds for the southwest (Barbero et al. 2015, USGCRP 2017). This increased wildfire risk leads to risk of biome shifts -- upslope shifts of the elevational zones of pinyon-juniper woodland, ponderosa pine forest, and spruce-fir forest -- due to continued climate change (Gonzalez et al., 2010) and the combination of climate change and land use change (Eigenbrod et al., 2015).
+
+Climatic water deficit -- the difference between potential evapotranspiration and actual -- is an indicator for amount of additional water plants would use if it were available and is often used to indicate landscape dryness, and increasing deficit correlates with increased fire risk and plant stress (Thoma et al., 2020). Climatic water deficit is determined using a water balance model (see methods), which accounts for the interactive effects of temperature and precipitation. Due to warming in both climate futures average annual water deficit in `r params$name` is increasing in both (warm wet + 1.3 inches/year, hot dry 5.3 inches/year on average). In the hottest climate future, moisture availability in the wettest years will be equivalent to average conditions in the past (Figure 7), what is now considered the driest year will become the new average. In this climate future, and dry years will be drier than anything experienced in the park since 1979. Under the hot dry scenario, the park can expect increased climatic water deficit, fire risk, and plant stress. In the warm wet scenario, water deficit will remain similar to past and current conditions, which includes high variability from year-to-year.
+
+![**Figure 6.** Metrics representing fire hazards. Top panel shows AET and climatic water deficit using individual projections, both metrics correlate strongly with wildfire risk (citation from Thoma). Bottom panel shows distributions of climatic water deficit for each climate future. Under hot dry climate future, what is now considered the driest year will become the new average](Data/TUSK/WarmWet_HotDry/figures/Panel-D.in-WaterBalance.png){width="431"}
+
+## Invasice species and pests
+
+Increased temperatures and CO2, changes in precipitation, and disturbance due to extreme climate events can increase the survival, spread, growth, and establishment of pests and invasive species (IPCC 2014). Climate change can favor invasive alien plants, including cheatgrass, red brome, yellow starthistle, and other species, for three main reasons. (1) Carbon dioxide (CO2) enrichment - Invasive alien plants generally exploit atmospheric CO2 more efficiently than native species, generating higher growth rates and increases in seed production (Davidson et al., 2011; Liu et al., 2017). (2) Warmth and moisture - Increasing warmth and moisture due to climate change can increase the suitability of temperate zone ecosystems to plants from tropical zones (Hellmann et al., 2008; Theoharides and Dukes, 2007). Any future conditions of increasing aridity, however, would be unfavorable to invasive alien plants that thrive in moister conditions. Increased frequency of extreme storms could lead to episodes of higher moisture. (3) Disturbance - Invasive alien plants often proliferate in sites disturbed by physical vegetation removal or by wildfire (Hellmann et al., 2008; Theoharides and Dukes, 2007). In the western U.S., anthropogenic climate change causes two disturbances, biome shifts (Gonzalez et al., 2010) and increased wildfire (Abatzoglou and Williams, 2016), that tend to increase the risk of invasive species establishment (Early et al., 2016). The combination of these climate change factors and the introduction and transportation of invasive alien species seeds by people causes a high risk of invasive alien species under climate change in northern Arizona (Early et al., 2016).
+
+Rooting and burrowing mammals and termites have the potential to cause direct damage to power, water, transportation, and building facilities (Vissichelli 2018). Facilities may be also be impacted indirectly through other mechanisms exacerbated by climate change such as forest insect pest invasions or fluctuating ground water levels leading to increased tree mortality, hazard trees, and treefall. Weeds and aquatic mussels have the potential to cause direct damage to power, water, transportation, and building facilities (Vissichelli 2018). Non-native species that may not currently impact facilities may become harmful due to changes in local climates (NRC 2002, IPCC 2014).
+
+# Incorporation into planning
+
+Concepts from [Planning for a Changing Climate](https://irma.nps.gov/DataStore/Reference/Profile/2279647) can help integrate the above potential climate impacts into planning at `r params$name` and aid in developing a robust climate change response, which will better protect park resources and assets today and for future generations. Potential climate impacts can be considered during goal setting, testing existing management activities, or identifying new climate change adaptation strategies.
+
+## Develop forward-looking goals that consider future climatic conditions
+
+Adaptation planning looks to the future, not the past, by using climate projections to adopt forward-looking goals. The term 'goals' should be interpreted broadly, recognizing that different planning processes use different terms and approaches. For example, a General Management Plan or Visitor Use Management Plan may focus on developing desired conditions, whereas a Resource Stewardship Strategy seeks to identify long- and short-term goals. Regardless of the specific terminology, adaptation planning offers an important opportunity to establish or adjust ***climate-informed goals***, which look to the future and seek to strike a balance between traditional aspirations and emerging realities. Furthermore, the information provided above can be used to identify climate implications for management strategies and actions that may flow from broader climate-informed goals.
+
+**Putting it into action:** This report provides information about past, present, and potential future climate conditions for `r params$name`. Use that climate information to develop new goals (e.g., desired conditions) or reconsider existing management goals. If it is apparent that goals cannot be met under projected future conditions, update or refine them. Goals should increasingly acknowledge continuous change and the potential for unavoidable losses or transformations.
+
+The worksheet below (Table 1) is an example that can help assess whether draft desired conditions, and/or management strategies and actions are feasible under different climate scenarios. Use this worksheet in conjunction with the climate information provided above to identify potential climate implications for desired conditions, goals, strategies, and/or actions and revise them as needed.
+
+• Adaptation planning offers an important opportunity to establish or adjust ***desired conditions*** for the future and formulate ***climate-informed goals***, which seek to strike a balance between traditional aspirations and emerging realities.
+
+## Consider more than one scenario of the future when developing management strategies and actions.
+
+Adaptation planning considers *multiple scenarios* of the future to account for uncertainty in the scope, magnitude, and effects of climate change. This allows planners to (1) explore a variety of *plausible future conditions*; (2) evaluate the implications of those conditions; and (3) identify a portfolio of possible management strategies. A similar table or exercise to Table 1 can be used for testing or developing management strategies or other plan elements that may be needed to fulfill future goals. See Schuurman et al. 2019. for examples.
+
+**Putting it into action:** This report provides two climate scenarios ("warm-wet" and "hot-dry") that capture a range of plausible future conditions for `r params$name`. Under each scenario, identify what strategies and actions can reduce risk and enable the park to meet its goals. You might also consider what strategies and actions can take advantage of possible opportunities under each scenario.
+
+1.  Start by brainstorming an array of strategies that could address important climate risks. Consult existing sources of climate-informed management strategies and actions, which might be found in other planning documents like an RSS, NRCA, CRSA, climate-friendly parks plan, or vulnerability assessment, among others.
+
+2.  Next, decide how you will compare and evaluate strategies to decide which to select and include in the plan. Strategies and actions could be evaluated based on their effectiveness across multiple scenarios, effectiveness in the 'worst case' scenario, how they align with park management goals, and/or their feasibility.
+
+[**Table 1.** Example worksheet that can be used to assess if desired conditions/goals are feasible under different climate futures.]
+
+```{r Table 1, echo=F, warning=F, message=F}
+
+# In Progress
+
+tbl1<-read.csv("Data/Table1.csv", header = F)
+gt_tbl1<-gt(tbl1)
+gt_tbl1<-
+  gt_tbl1%>%
+  tab_header(
+    title = NULL
+  )
+gt_tbl1
+```
+
+# References
+
+Abatzoglou, J.T. and Brown, T.J., 2012. A comparison of statistical downscaling methods suited for wildfire applications. International journal of climatology, 32(5), pp.772-780.
+
+Abatzoglou JT, and AP Williams. 2016. Impact of anthropogenic climate change on wildfire across western US forests. Proceedings of the National Academy of Sciences 113:11770-11775. 
+
+Agee, J. K., and C. N. Skinner. 2005. Basic principles of forest fuel reduction treatments. Forest Ecology and Management 211:83-96. 
+
+Barbero, R., J. T. Abatzoglou, N. K. Larkin, C. A. Kolden, and B. Stocks. 2015. Climate change presents increased potential for very large fires in the contiguous United States. International Journal of Wildland Fire 24:892.
+
+Davidson AM, M Jennions, and AB Nicotra. 2011. Do invasive species show higher phenotypic plasticity than native species and, if so, is it adaptive? A meta-analysis. Ecol Lett 14:419-431. 
+
+Department of Homeland Security. 2015. Drought Impacts to Critical Infrastructure. Office of Cyber and Infrastructure Analysis. April 23, 2015. 
+
+Dethier, E.N., S.L. Sartain, C.E. Renshaw, and F.J. Magilligan. 2020. Spatially coherent regional changes in seasonal extreme streamflow events in the United States and Canada since 1950. Science Advances 6: eaba5939.  
+
+Early R, BA Bradley, JS Dukes, JJ Lawler, JD Olden, DM Blumenthal, . . . AJ Tatem. 2016. Global threats from invasive alien species in the twenty-first century and national response capacities. Nat Commun 7:12485. 
+
+Easterling, D. R., K. E. Kunkel, J. R. Arnold, T. Knutson, A. N. LeGrande, L. R. Leung, R. S. Vose, D. E. Waliser, and M. F. Wehner. 2017. Precipitation change in the United States. In U.S. Global Change Research Program (USGRP). Climate Science Special Report. Fourth National Climate Assessment, Volume I. [Wuebbles, D.J., D.W. Fahey, K.A. Hibbard, D.J. Dokken, B.C. Stewart, and T.K. Maycock (eds.)] USGCRP, Washington, DC.  
+
+Eigenbrod F, P Gonzalez, J Dash, and I Steyl. 2015. Vulnerability of ecosystems to climate change moderated by habitat intactness. Global Change Biology 21:275-286. 
+
+Gonzalez, P., R. P. Neilson, J. M. Lenihan, and R. J. Drapek. 2010. Global patterns in the vulnerability of ecosystems to vegetation shifts due to climate change. Global Ecology and Biogeography 19:755-768. 
+
+Gonzalez, P., F. Wang, M. Notaro, D.J. Vimont, and J.W. Williams. 2018. Disproportionate magnitude of climate change in United States national parks. Environmental Research Letters 13: 104001. doi:10.1088/1748-9326/aade09. 
+
+Hellmann JJ, JE Byers, BG Bierwagen, and JS Dukes. 2008. Five potential consequences of climate change for invasive species. Conserv Biol 22:534-543. 
+
+IPCC. 2014. Climate Change 2014: Impacts, Adaptation, and Vulnerability. Part A: Global and Sectoral Aspects. Contribution of Working Group II to the Fifth Assessment Report of the Intergovernmental Panel on Climate Change [Field, C.B., V.R. Barros, D.J. Dokken, K.J. Mach, M.D. Mastrandrea, T.E. Bilir, M. Chatterjee, K.L. Ebi, Y.O. Estrada, R.C. Genova, B. Girma, E.S. Kissel, A.N. Levy, S. MacCracken, P.R. Mastrandrea, and L.L. White (eds.)]. Cambridge University Press, Cambridge, United Kingdom and New York, NY, USA, 1132 pp. https://www.ipcc.ch/site/assets/uploads/2018/02/WGIIAR5-PartA_FINAL.pdf. 
+
+Jolly, W. M., M. A. Cochrane, P. H. Freeborn, Z. A. Holden, T. J. Brown, G. J. Williamson, and D. M. Bowman. 2015. Climate-induced variations in global wildfire danger from 1979 to 2013. Nature Communications 6:7537.
+
+Liu, Y., S. L. Goodrick, J. A. Stanturf. 2013. Future U.S. wildfire potential trends projected using a dynamically downscaled climate change scenario. Forest Ecology and Management 294:120–135.
+
+Liu Y, AMO Oduor, Z Zhang, A Manea, IM Tooth, MR Leishman, . . . M van Kleunen. 2017. Do invasive alien plants benefit more from global environmental change than native plants? Global Change Biology 23:3363-3370. 
+
+Michalak JL, Lawler JJ, Gross JE, Littlefield CE. 2021. A strategic analysis of climate vulnerability of national park resources and values. Natural Resource Report. NPS/NRSS/CCRP/NRR—2021/2293. National Park Service. Fort Collins, Colorado. https://doi.org/10.36967/nrr-2287214
+
+Monahan, W. B., and N. A. Fisichelli. 2014. Climate exposure of US National Parks in a new era of change. Plos One. 9(7):1. 
+
+Mosley, L. M. 2015. Drought impacts on the water quality of freshwater systems; review and integration. Earth-Science Reviews 140:203-214. 
+
+NRC. 2002. Predicting Invasions of Nonindigenous Plants and Plant Pests; National Academies Press: Washington, DC, USA. ISBN 978-0-309-08264-8. 
+
+National Park Service (NPS). 2004. Heat injury prevention: Cool ideas on a hot topic! Participant Guide. Revised May 27, 2004. Risk Management Division and U.S. Fish and Wildlife Service Division of Safety and Health. Available at: https://www.nps.gov/training/tel/guides/hip_pguide_2004_0527.pdf (accessed 04 June 2019).
+
+Occupational Safety and Health Administration (OSHA). 2019. Using the Heat Index: A Guide for employers. Available at: https://www.osha.gov/SLTC/heatillness/heat_index/ (accessed 04 June 2019)
+
+Schuurman, G. W., A. Symstad, B. W. Miller, A. N. Runyon, and R. Ohms. 2019. Climate change scenario planning for resource stewardship: Applying a novel approach in Devils Tower National Monument. Natural Resource Report NPS/NRSS/CCRP/NRR—2019/2052. National Park Service, Fort Collins, Colorado.
+
+Tabari, H. 2020. Climate change impact on flood and extreme precipitation increases with water availability. Scientific Reports 10:13768.
+
+Theoharides KA, and JS Dukes. 2007. Plant invasion across space and time: factors affecting nonindigenous species success during four stages of invasion. New Phytologist 176:256-273. 
+
+Thoma DP, MT Tercek, EW Schweiger, SM Munson, JE Gross, and ST Olliff. 2020. Water balance as an indicator of natural resource condition: Case studies from Great Sand Dunes National Park and Preserve. Global Ecology and Conservation 24. 
+
+USGCRP (U.S. Global Change Research Program). 2017. Climate Science Special Report: Fourth National Climate Assessment, Volume I [Wuebbles, D.J., D.W. Fahey, K.A. Hibbard, D.J. Dokken, B.C. Stewart, and T.K. Maycock (eds.)]. U.S. Global Change Research Program, Washington, DC, USA, 470 pp., doi: 10.7930/J0J964J6. 
+
+Vissichelli, M. 2018. Invasive species impacts on federal infrastructure. National Invasive Species Council Secretariat, Washington, DC. https://www.doi.gov/sites/doi.gov/files/uploads/invasive_species_impacts_on_federal_infrastructure.pdf
+
+Wehner, M. F., J. R. Arnold, T. Knutson, K. E. Kunkel, and A. N. LeGrande. 2017. Droughts, floods, and wildfires. In: Climate Science Special Report: Fourth National Climate Assessment, Volume I [Wuebbles, D.J., D.W. Fahey, K.A. Hibbard, D.J. Dokken, B.C. Stewart, and T.K. Maycock (eds.)]. U.S. Global Change Research Program, Washington, DC, USA, pp. 231-256
+
+# Appendix 1. Climate futures table
+
+Projected changes in climate metrics presented in this report. Each value is the difference between the climate metric's future-period (2025-2055) average and the historical--period (1979-2012) average.
+
+```{r}
+
+
+
+```
+
+
+
