@@ -1,19 +1,20 @@
 ---
 title: "Future Climate Exposure Report"
 date: "`r Sys.Date()`"
-output: officedown::rdocx_document
-  reference_docx: "Data/template.docx"
+output: 
+  word_document:
+    reference_docx: "Data/template.docx"
 params:
-  region:
-    label: "Region:"
-    value: NCPN
-    input: select
-    choices: [APHN, CHDN, CUPN, ERMN, GLKN, GRYN, GULN, HTLN, KLMN, CRLA, MEDN, MIDN, MOJN, NCBN, NCCN, NCPN, NCRN, NETN, NGPN, ROMN, SCPN, SECN, SFAN, SFCN, SIEN, SODN, SOPN, UCBN]
   name: 
     label: "Park Name"
     value: TUSK
     input: select
     choices: [ABLI, ACAD, ADAM, AFBG, AGFO, ALFL, ALPO, AMIS, ANDE, ANJO, ANTI, APCO, APIS, APPA, ARCH, ARHO, ARPO, ASIS, AZRU, BADL, BAND, BEOL, BEPA, BIBE, BICA, BICR, BICY, BIHO, BISC, BISO, BITH, BLCA, BLRI, BLRV, BLUE, BOAF, BOHA, BOST, BOWA, BRCA, BRCR, BRVB, BUFF, CACH, CACL, CACO, CAGR, CAHA, CAJO, CALO, CAMO, CANA, CANE, CANY, CARE, CARI, CARL, CASA, CATO, CAVE, CAVO, CAWO, CEBE, CEBR, CECH, CHAM, CHAT, CHCH, CHCU, CHIC, CHIR, CHIS, CHOH, CHPI, CHSC, CHYO, CIRO, CLBA, COGA, COLM, COLO, CONG, CORO, COWP, CRLA, CRMO, CRMP, CUGA, CUIS, CURE, CUVA, DAAV, DDEM, DELA, DEPO,DETO,DEVA, DEWA, DINO, EBLA, EDAL, EDIS, EFMO, EISE, ELMA, ELMO, ELRO, EUON, EVER, FEHA, FIIS, FILA, FLFO, FLNI, FOBO, FOBU, FOCA, FODA, FODO, FOFR, FOLA, FOLS, FOMA, FOMC, FOMR, FONE, FOPU, FOSC, FOSM, FOST, FOTH, FOUN, FOUS, FOVA, FOWA, FRDE, FRDO, FRHI, FRLA, FRRI, FRSP, FRST, GARI, GATE, GEGR, GERO, GETT, GEWA, GICL, GLAC, GLCA, GOGA, GOSP, GRBA, GRCA, GREE, GRKO, GRPO, GRSA, GRSA, GRSM, GRTE, GUCO, GUIS, GUMO, GWCA, GWMP, HAFE, HAFO, HAGR, HAMP, HART, HATU, HEHO, HOBE, HOCU, HOFR, HOFU, HOME, HOSP, HOVE, HSTR, HUTR, IATR, INDE, INDU, ISRO, JAGA, JAZZ, JECA, JEFF, JEFM, JELA, JICA, JODA, JODR, JOFI, JOFL, JOMU, JOTR, KAWW, KEMO, KEWE, KICA, KIMO, KLGO, KNRI, KOWA, LABE, LACH, LAKE, LAMR, LARO, LAVO, LECL, LEWI, LIBI, LIBO, LIHO, LINC, LIRI, LONG, LOSA, LOWE, LYBA, LYJO, MABE, MABI, MACA, MALL, MALU, MANA, MANZ, MAPR, MAVA, MAWA, MEMY, MEVE, MIIN, MIMA, MIMI, MISP, MISS, MLKM, MNRR, MOCA, MOCR, MOJA, MONO, MORA, MORR, MORU, MUWO, NABR, NACA, NATC, NATR, NAVA, NEBE, NEPE, NERI, NICO, NIOB, NISI, NOCA, NOCO, OBRI, OCMU, OLYM, ORCA, ORPI, OZAR, PAAL, PAAV, PAGR, PAIS, PECO, PEFO, PERI, PETE, PETR, PIMA, PINN, PIPE, PIRO, PISC, PISP, POPO, PORE, PRWI, PULL, RABR, REDW, REER, RICH, RIGR, RIRA, ROCR, ROLA, ROMO, RORI, ROWI, RRBH, RUCA, SAAN, SACN, SAGA, SAGU, SAHI, SAIR, SAJH, SAMA, SAMO, SAND, SAPA, SAPU, SARA, SCBL, SEMO, SEQU, SHEN, SHIL, SLBE, SPAR, STEA, STGE, STLI, STON, STRI, SUCR, TAPR, THIS, THKO, THRB, THRI, THRO, THST, TICA, TIMU, TONT, TUAI, TUIN, TULE, TUMA, TUPE, TUSK, TUZI, ULSG, UPDE, VAFO, VALL, VAMA, VICK, VIVE, VOYA, WABA, WACA, WACO, WAMO, WEFA, WHHO, WHIS, WHMI, WHSA, WICA, WICL, WICR, WIHO, WORI, WOTR, WRBR, WUPA, WWII, WWIM, YELL, YOSE, YUHO, ZION]
+   region:
+    label: "Region:"
+    value: NCPN
+    input: select
+    choices: [APHN, CHDN, CUPN, ERMN, GLKN, GRYN, GULN, HTLN, KLMN, CRLA, MEDN, MIDN, MOJN, NCBN, NCCN, NCPN, NCRN, NETN, NGPN, ROMN, SCPN, SECN, SFAN, SFCN, SIEN, SODN, SOPN, UCBN]
 toc: 
 theme: united
 ---
@@ -25,33 +26,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r Initials, echo=FALSE, message=FALSE, warning=FALSE}
 rm(list = ls())
 
-library(stars);library(dplyr);library(ggplot2);library(ggthemes);library(viridis);library(here);library(ggrepel);library(rlang);library(units);library(knitr);library(purrr);library(glue); library(gt); library(officer);library(dplyr)
+library(stars);library(dplyr);library(ggplot2);library(ggthemes);library(viridis);library(here);library(ggrepel);library(rlang);library(units);library(knitr);library(purrr);library(glue); library(gt); library(officer);library(dplyr); library(abind); library(sf)
 
 ```
 
 ```{r Iterate, echo=FALSE, message=FALSE, warning=FALSE}
 
 purrr::walk(varNames, ~rmarkdown::render('CF-Exposure.Rmd', params = list(data = .) output_file = glue::glue("CF_{.}.doc")))
-
-# for (i in 1:length(varNames)) {
-#     body_replace_all_text(old_value = "(NAME)",
-#                           new_value = varNames[i], 
-#                           only_at_cursor=FALSE,
-#                           ignore.case =FALSE) %>%
-#     
-#     # then, print the outputs. Output name should be generated dynamically:
-#     # every report (for every i) need to have a different name.
-#     print(target = paste0("CF_",i,".docx")) 
-# 
-# }
-# 
-# for (i in 1:length(varNames)){
-#   body_replace_all_text(old_value = "(NAME)",
-#                           new_value = varNames[i], 
-#                           only_at_cursor=FALSE,
-#                           ignore.case =FALSE) %>%
-#   ~rmarkdown::render("CF-Exposure.Rmd", output_file = glue::glue("CF_",i,".docx"))
-#   }
 ```
 
 # Introduction
@@ -64,7 +45,7 @@ The NPS [*Planning for a Changing Climate*](https://irma.nps.gov/DataStore/Refer
 
 `r run_columnbreak()`
 
-$\color{blue}{\text{Climate change adaption}}$ *is an adjustment in natural or human systems that moderates harm or harnesses beneficial opportunities. Timely, forward-looking adaptation can help conserve cultural and natural resources, develop climate change-ready infrastructure, safeguard human wellbeing, and foster a positive visitor experience. See [Climate Change Glossary](https://irmadev.nps.gov/DataStore/DownloadFile/665664) for full definition.*
+*Climate change adaption is an adjustment in natural or human systems that moderates harm or harnesses beneficial opportunities. Timely, forward-looking adaptation can help conserve cultural and natural resources, develop climate change-ready infrastructure, safeguard human wellbeing, and foster a positive visitor experience. See [Climate Change Glossary](https://irmadev.nps.gov/DataStore/DownloadFile/665664) for full definition.*
 
 <!---BLOCK_MULTICOL_STOP--->
 
@@ -76,7 +57,7 @@ Climate projections for `r params$name` in 2040 (2025-2055) span a range of warm
 
 Understanding potential impacts on resources of interests requires evaluating both exposure and sensitivity of those resources (Figure 2). The NPVuln report (Michalak et al. 2021; [NPVuln - Climate Change (U.S. National Park Service) (nps.gov)](https://www.nps.gov/subjects/climatechange/npvuln.htm)) used 47 indicators to evaluate parks' historical exposure and sensitivity to climate changes and found that 71% of national parks in the contiguous U.S. are at high risk from the effects of climate change. `r params$name` in particular was flagged as vulnerable to: future high-impact fire, high-impact drought, pests and invasive species, biome shifts, and extreme temperature and precipitation changes. Specific climate metrics relevant to these impacts are summarized below for the warm wet and hot dry climate futures.
 
-![**Figure 1.** Climate vulnerability results from exposure to climate changes, sensitivity to those changes, and the ability of the resource to adapt to those changes (Michalak et al. 2021).](Data/Exposure_Sensitivity.png){width="431"}
+![**Figure 1.** Climate vulnerability results from exposure to climate changes, sensitivity to those changes, and the ability of the resource to adapt to those changes (Michalak et al. 2021).](Data/Exposure_Sensitivity.png){width="300"}
 
 ## Annual Average temperature and precipitation
 
@@ -108,7 +89,7 @@ Rising air temperatures and changing precipitation patterns are exacerbating dro
 
 The Standardized Precipitation Evaporation Index (SPEI) provides a metric to assess changing drought conditions at `r params$name`. Figure 6 shows the annual SPEI values (SPEI-6, averaged for each year; see methodological note for details) for each climate future and drought characteristics (duration, return interval, and severity). In the hot dry climate future, conditions are almost always what would be considered a drought historically and the system will have little time to recover between these events. On the other hand, in the warm wet climate future, droughts will become shorter in duration, occur less frequently, and will be less severe.
 
-![**Figure 5.** . Drought metrics for `r params$name`. The top two plots show annual standardized precipitation and evapotranspiration index (SPEI) values for the observed historical period (1979-2020) and the two climate futures (2023-2099). The gray shaded area represents the 2025-2055 period upon which the characteristics are averaged (See climate exposure methods note <INSERT LINK> for methodological details). Bottom three plots show characteristics of average drought conditions for the historical period (1979-2012) and two climate futures (2025-2055).](Data/Tusk/WarmWet_HotDry/figures/DroughtCharacteristics-2-Panel.png){width="431"}
+![**Figure 5.** . Drought metrics for `r params$name`. The top two plots show annual standardized precipitation and evapotranspiration index (SPEI) values for the observed historical period (1979-2020) and the two climate futures (2023-2099). The gray shaded area represents the 2025-2055 period upon which the characteristics are averaged (See climate exposure methods note <INSERT LINK> for methodological details). Bottom three plots show characteristics of average drought conditions for the historical period (1979-2012) and two climate futures (2025-2055).](Data/TUSK/WarmWet_HotDry/figures/DroughtCharacteristics-2-Panel.png){width="431"}
 
 ## Wildfire
 
@@ -140,6 +121,8 @@ The worksheet below (Table 1) is an example that can help assess whether draft d
 
 • Adaptation planning offers an important opportunity to establish or adjust ***desired conditions*** for the future and formulate ***climate-informed goals***, which seek to strike a balance between traditional aspirations and emerging realities.
 
+• If it is apparent that goals cannot be met under projected future conditions, update or refine them. Goals should increasingly acknowledge continuous change and the potential for unavoidable losses or transformations.
+
 ## Consider more than one scenario of the future when developing management strategies and actions.
 
 Adaptation planning considers *multiple scenarios* of the future to account for uncertainty in the scope, magnitude, and effects of climate change. This allows planners to (1) explore a variety of *plausible future conditions*; (2) evaluate the implications of those conditions; and (3) identify a portfolio of possible management strategies. A similar table or exercise to Table 1 can be used for testing or developing management strategies or other plan elements that may be needed to fulfill future goals. See Schuurman et al. 2019. for examples.
@@ -150,21 +133,8 @@ Adaptation planning considers *multiple scenarios* of the future to account for 
 
 2.  Next, decide how you will compare and evaluate strategies to decide which to select and include in the plan. Strategies and actions could be evaluated based on their effectiveness across multiple scenarios, effectiveness in the 'worst case' scenario, how they align with park management goals, and/or their feasibility.
 
-[**Table 1.** Example worksheet that can be used to assess if desired conditions/goals are feasible under different climate futures.]
-
-```{r Table 1, echo=F, warning=F, message=F}
-
-# In Progress
-
-tbl1<-read.csv("Data/Table1.csv", header = F)
-gt_tbl1<-gt(tbl1)
-gt_tbl1<-
-  gt_tbl1%>%
-  tab_header(
-    title = NULL
-  )
-gt_tbl1
-```
+**Table 1.** Example worksheet that can be used to assess if desired conditions/goals are feasible under different climate futures.
+![Desired Conditions](Data/DesiredConditionsTable.png)
 
 # References
 
@@ -228,15 +198,11 @@ Vissichelli, M. 2018. Invasive species impacts on federal infrastructure. Nation
 
 Wehner, M. F., J. R. Arnold, T. Knutson, K. E. Kunkel, and A. N. LeGrande. 2017. Droughts, floods, and wildfires. In: Climate Science Special Report: Fourth National Climate Assessment, Volume I [Wuebbles, D.J., D.W. Fahey, K.A. Hibbard, D.J. Dokken, B.C. Stewart, and T.K. Maycock (eds.)]. U.S. Global Change Research Program, Washington, DC, USA, pp. 231-256
 
+\newpage
+
 # Appendix 1. Climate futures table
 
-Projected changes in climate metrics presented in this report. Each value is the difference between the climate metric's future-period (2025-2055) average and the historical--period (1979-2012) average.
+Projected changes in climate metrics presented in this report. Each value is the difference between the climate metrics future-period (2025-2055) average and the historical--period (1979-2012) average.
 
-```{r}
-
-
-
-```
-
-
+<!-- Insert Appendix table -->
 

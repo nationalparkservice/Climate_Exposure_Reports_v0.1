@@ -28,26 +28,6 @@ library(stars);library(dplyr);library(ggplot2);library(ggthemes);library(viridis
 ```{r Iterate, echo=FALSE, message=FALSE, warning=FALSE}
 
 purrr::walk(varNames, ~rmarkdown::render('CF-Exposure.Rmd', params = list(data = .) output_file = glue::glue("CF_{.}.doc")))
-
-# for (i in 1:length(varNames)) {
-#     body_replace_all_text(old_value = "(NAME)",
-#                           new_value = varNames[i], 
-#                           only_at_cursor=FALSE,
-#                           ignore.case =FALSE) %>%
-#     
-#     # then, print the outputs. Output name should be generated dynamically:
-#     # every report (for every i) need to have a different name.
-#     print(target = paste0("CF_",i,".docx")) 
-# 
-# }
-# 
-# for (i in 1:length(varNames)){
-#   body_replace_all_text(old_value = "(NAME)",
-#                           new_value = varNames[i], 
-#                           only_at_cursor=FALSE,
-#                           ignore.case =FALSE) %>%
-#   ~rmarkdown::render("CF-Exposure.Rmd", output_file = glue::glue("CF_",i,".docx"))
-#   }
 ```
 
 # Introduction
@@ -60,7 +40,7 @@ The NPS [*Planning for a Changing Climate*](https://irma.nps.gov/DataStore/Refer
 
 `r run_columnbreak()`
 
-$\color{blue}{\text{Climate change adaption}}$ *is an adjustment in natural or human systems that moderates harm or harnesses beneficial opportunities. Timely, forward-looking adaptation can help conserve cultural and natural resources, develop climate change-ready infrastructure, safeguard human wellbeing, and foster a positive visitor experience. See [Climate Change Glossary](https://irmadev.nps.gov/DataStore/DownloadFile/665664) for full definition.*
+*Climate change adaption is an adjustment in natural or human systems that moderates harm or harnesses beneficial opportunities. Timely, forward-looking adaptation can help conserve cultural and natural resources, develop climate change-ready infrastructure, safeguard human wellbeing, and foster a positive visitor experience. See [Climate Change Glossary](https://irmadev.nps.gov/DataStore/DownloadFile/665664) for full definition.*
 
 <!---BLOCK_MULTICOL_STOP--->
 
@@ -72,7 +52,7 @@ Climate projections for `r params$name` in 2040 (2025-2055) span a range of warm
 
 Understanding potential impacts on resources of interests requires evaluating both exposure and sensitivity of those resources (Figure 2). The NPVuln report (Michalak et al. 2021; [NPVuln - Climate Change (U.S. National Park Service) (nps.gov)](https://www.nps.gov/subjects/climatechange/npvuln.htm)) used 47 indicators to evaluate parks' historical exposure and sensitivity to climate changes and found that 71% of national parks in the contiguous U.S. are at high risk from the effects of climate change. `r params$name` in particular was flagged as vulnerable to: future high-impact fire, high-impact drought, pests and invasive species, biome shifts, and extreme temperature and precipitation changes. Specific climate metrics relevant to these impacts are summarized below for the warm wet and hot dry climate futures.
 
-![**Figure 1.** Climate vulnerability results from exposure to climate changes, sensitivity to those changes, and the ability of the resource to adapt to those changes (Michalak et al. 2021).](Data/Exposure_Sensitivity.png){width="431"}
+![**Figure 1.** Climate vulnerability results from exposure to climate changes, sensitivity to those changes, and the ability of the resource to adapt to those changes (Michalak et al. 2021).](Data/Exposure_Sensitivity.png){width="300"}
 
 ## Annual Average temperature and precipitation
 
@@ -104,7 +84,7 @@ Rising air temperatures and changing precipitation patterns are exacerbating dro
 
 The Standardized Precipitation Evaporation Index (SPEI) provides a metric to assess changing drought conditions at `r params$name`. Figure 6 shows the annual SPEI values (SPEI-6, averaged for each year; see methodological note for details) for each climate future and drought characteristics (duration, return interval, and severity). In the hot dry climate future, conditions are almost always what would be considered a drought historically and the system will have little time to recover between these events. On the other hand, in the warm wet climate future, droughts will become shorter in duration, occur less frequently, and will be less severe.
 
-![**Figure 5.** . Drought metrics for `r params$name`. The top two plots show annual standardized precipitation and evapotranspiration index (SPEI) values for the observed historical period (1979-2020) and the two climate futures (2023-2099). The gray shaded area represents the 2025-2055 period upon which the characteristics are averaged (See climate exposure methods note <INSERT LINK> for methodological details). Bottom three plots show characteristics of average drought conditions for the historical period (1979-2012) and two climate futures (2025-2055).](Data/Tusk/WarmWet_HotDry/figures/DroughtCharacteristics-2-Panel.png){width="431"}
+![**Figure 5.** . Drought metrics for `r params$name`. The top two plots show annual standardized precipitation and evapotranspiration index (SPEI) values for the observed historical period (1979-2020) and the two climate futures (2023-2099). The gray shaded area represents the 2025-2055 period upon which the characteristics are averaged (See climate exposure methods note <INSERT LINK> for methodological details). Bottom three plots show characteristics of average drought conditions for the historical period (1979-2012) and two climate futures (2025-2055).](Data/TUSK/WarmWet_HotDry/figures/DroughtCharacteristics-2-Panel.png){width="431"}
 
 ## Wildfire
 
@@ -136,6 +116,8 @@ The worksheet below (Table 1) is an example that can help assess whether draft d
 
 • Adaptation planning offers an important opportunity to establish or adjust ***desired conditions*** for the future and formulate ***climate-informed goals***, which seek to strike a balance between traditional aspirations and emerging realities.
 
+• If it is apparent that goals cannot be met under projected future conditions, update or refine them. Goals should increasingly acknowledge continuous change and the potential for unavoidable losses or transformations.
+
 ## Consider more than one scenario of the future when developing management strategies and actions.
 
 Adaptation planning considers *multiple scenarios* of the future to account for uncertainty in the scope, magnitude, and effects of climate change. This allows planners to (1) explore a variety of *plausible future conditions*; (2) evaluate the implications of those conditions; and (3) identify a portfolio of possible management strategies. A similar table or exercise to Table 1 can be used for testing or developing management strategies or other plan elements that may be needed to fulfill future goals. See Schuurman et al. 2019. for examples.
@@ -146,21 +128,8 @@ Adaptation planning considers *multiple scenarios* of the future to account for 
 
 2.  Next, decide how you will compare and evaluate strategies to decide which to select and include in the plan. Strategies and actions could be evaluated based on their effectiveness across multiple scenarios, effectiveness in the 'worst case' scenario, how they align with park management goals, and/or their feasibility.
 
-[**Table 1.** Example worksheet that can be used to assess if desired conditions/goals are feasible under different climate futures.]
-
-```{r Table 1, echo=F, warning=F, message=F}
-
-# In Progress
-
-tbl1<-read.csv("Data/Table1.csv", header = F)
-gt_tbl1<-gt(tbl1)
-gt_tbl1<-
-  gt_tbl1%>%
-  tab_header(
-    title = NULL
-  )
-gt_tbl1
-```
+**Table 1.** Example worksheet that can be used to assess if desired conditions/goals are feasible under different climate futures.
+![Desired Conditions](Data/DesiredConditionsTable.png)
 
 # References
 
@@ -224,15 +193,11 @@ Vissichelli, M. 2018. Invasive species impacts on federal infrastructure. Nation
 
 Wehner, M. F., J. R. Arnold, T. Knutson, K. E. Kunkel, and A. N. LeGrande. 2017. Droughts, floods, and wildfires. In: Climate Science Special Report: Fourth National Climate Assessment, Volume I [Wuebbles, D.J., D.W. Fahey, K.A. Hibbard, D.J. Dokken, B.C. Stewart, and T.K. Maycock (eds.)]. U.S. Global Change Research Program, Washington, DC, USA, pp. 231-256
 
+\newpage
+
 # Appendix 1. Climate futures table
 
-Projected changes in climate metrics presented in this report. Each value is the difference between the climate metric's future-period (2025-2055) average and the historical--period (1979-2012) average.
+Projected changes in climate metrics presented in this report. Each value is the difference between the climate metrics future-period (2025-2055) average and the historical--period (1979-2012) average.
 
-```{r}
-
-
-
-```
-
-
+<!-- Insert Appendix table -->
 
